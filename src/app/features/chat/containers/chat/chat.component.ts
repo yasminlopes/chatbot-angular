@@ -64,7 +64,7 @@ export class ChatComponent implements OnInit {
       .subscribe(
         (markdownContent: string) => {
           this.chatForm.controls.content.setValue(markdownContent);
-          this.chatForm.controls.pergunta.setValue(''); // Limpe o campo pergunta após obter a resposta
+          this.chatForm.controls.pergunta.setValue('')
         },
         (error) => {
           console.log(error);
