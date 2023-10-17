@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
-import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { AbstractControl, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
 import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { ChatFormComponent } from '../../components/chat-form/chat-form.component';
 import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
@@ -31,6 +31,10 @@ export class ChatComponent implements OnInit {
       this.buildForm()
   }
 
+  public get pergunta() {
+    return this.chatForm.controls.pergunta.value;
+  }
+
   private buildForm(): void {
     this.chatForm = this._formBuilder.group({
       pergunta: ['', [Validators.required, Validators.minLength(5)]],
@@ -38,39 +42,36 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  public getQuestion$ = computed(() => this.chatForm.controls.pergunta.value)
-
-  public chatBotResponse$ = computed(() => this.chatForm.controls.content.value)
-
   public sendMessage(): void {
-    this.loading.set(true)
+    this.loading.set(true);
+  
     this._apiService
-      .getBardAiResponse(this.getQuestion$())
+      .getBardAiResponse(this.pergunta)
       .pipe(
         takeUntilDestroyed(this._destroyRef),
         switchMap((response: BardAiResponse) => {
-          const md = new MarkdownIt() 
-          const markdownContent = md.render(
-            response.resposta.content.toString()
-          );
+          const md = new MarkdownIt();
+          const markdownContent = md.render(response.resposta.content.toString());
           return of(markdownContent);
         }),
         catchError(() => {
-          return of('Erro, tente novamente.')
+          return of('Erro, tente novamente.');
         }),
         finalize(() => {
-          this.loading.set(false)
+          this.loading.set(false);
         })
       )
       .subscribe(
         (markdownContent: string) => {
           this.chatForm.controls.content.setValue(markdownContent);
+          this.chatForm.controls.pergunta.setValue(''); // Limpe o campo pergunta após obter a resposta
         },
         (error) => {
-          console.log(error)
+          console.log(error);
         }
       );
   }
+  
 
   public fillSuggestion(suggestion: string) {
     this.chatForm.controls.pergunta.setValue(suggestion);
