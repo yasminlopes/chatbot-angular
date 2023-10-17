@@ -1,14 +1,13 @@
-import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ButtonComponent } from 'src/app/shared/components/button/button.component';
-import { InputComponent } from 'src/app/shared/components/input/input.component';
+import { Component, DestroyRef, OnInit, computed, inject, signal } from '@angular/core';
+import { FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { ChatFormComponent } from '../../components/chat-form/chat-form.component';
-import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@angular/forms';
-import { ApiService } from '../../services/api.service';
-import { tap } from 'rxjs';
-import { ChatFormProps } from '../../models/chat.model';
 import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
-
+import { BardAiResponse, ChatFormProps } from '../../models/chat.model';
+import { ApiService } from '../../services/api.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import * as MarkdownIt from 'markdown-it';
 @Component({
   selector: 'app-chat',
   standalone: true,
@@ -22,6 +21,9 @@ export class ChatComponent implements OnInit {
 
   private _formBuilder = inject(NonNullableFormBuilder);
   private _apiService = inject(ApiService);
+  private _destroyRef = inject(DestroyRef);
+
+  constructor() { }
 
   public loading = signal(false);
 
@@ -36,28 +38,36 @@ export class ChatComponent implements OnInit {
     })
   }
 
-  public getQuestion$ = computed(() => this.chatForm.get('pergunta')?.value)
+  public getQuestion$ = computed(() => this.chatForm.controls.pergunta.value)
+
   public chatBotResponse$ = computed(() => this.chatForm.controls.content.value)
 
-  public sendMessage() {
+  public sendMessage(): void {
     this.loading.set(true)
-    const pergunta = this.getQuestion$()
-    console.log(pergunta)
     this._apiService
-      .getBardAiResponse(pergunta)
+      .getBardAiResponse(this.getQuestion$())
       .pipe(
-        tap(() => {
+        takeUntilDestroyed(this._destroyRef),
+        switchMap((response: BardAiResponse) => {
+          const md = new MarkdownIt() 
+          const markdownContent = md.render(
+            response.resposta.content.toString()
+          );
+          return of(markdownContent);
+        }),
+        catchError(() => {
+          return of('Erro, tente novamente.')
+        }),
+        finalize(() => {
           this.loading.set(false)
         })
       )
       .subscribe(
-        (response: BardAiResponse) => {
-          const md = new MarkdownIt();
-          const markdownContent = md.render(response.resposta.content.toString())
+        (markdownContent: string) => {
           this.chatForm.controls.content.setValue(markdownContent);
         },
         (error) => {
-          console.log(error);
+          console.log(error)
         }
       );
   }
@@ -67,7 +77,7 @@ export class ChatComponent implements OnInit {
   }
 
   public clearQuestionField() {
-    this.chatForm.controls.pergunta.setValue('');
+    this.chatForm.controls.pergunta.reset('');
   }
 
 
