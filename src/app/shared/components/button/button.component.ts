@@ -10,7 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class ButtonComponent {
 
-  @Input({ required: true }) public text: string;
+  @Input() public text: string;
+  @Input() public textVisible: boolean = true;
+  @Input() public disabled: boolean
   @Input({ required: true }) public icon: string;
   @Output() public onClick = new EventEmitter();
 }

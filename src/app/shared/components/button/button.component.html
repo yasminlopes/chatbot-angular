@@ -1,3 +1,4 @@
-<button (click)="onClick.emit()">
-  <span class="material-icons">{{ icon }}</span> {{ text }}
+<button (click)="onClick.emit()" [title]="text" [disabled]="disabled">
+  <span class="material-icons">{{ icon }}</span>
+ {{ textVisible ? text : '' }}
 </button>

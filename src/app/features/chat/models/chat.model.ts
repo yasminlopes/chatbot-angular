@@ -15,6 +15,6 @@ export interface BardAi {
 }
 
 export interface ChatFormProps {
-  pergunta: FormControl<string | null>;
-  content: FormControl<string | null>;
+  pergunta: FormControl<string>;
+  content: FormControl<string>;
 }

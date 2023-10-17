@@ -4,6 +4,7 @@ import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonComponent } from 'src/app/shared/components/button/button.component';
 import { InputComponent } from 'src/app/shared/components/input/input.component';
 import { TypingLoaderComponent } from 'src/app/shared/components/typing-loader/typing-loader.component';
+import { ChatSuggestionsComponent } from '../chat-suggestions/chat-suggestions.component';
 
 @Component({
   selector: 'app-chat-form',
@@ -15,7 +16,8 @@ import { TypingLoaderComponent } from 'src/app/shared/components/typing-loader/t
     InputComponent,
     ReactiveFormsModule,
     FormsModule,
-    TypingLoaderComponent
+    TypingLoaderComponent,
+    ChatSuggestionsComponent
   ],
   standalone: true,
 })
@@ -26,5 +28,11 @@ export class ChatFormComponent {
   @Input({ required: true }) public loading: boolean;
 
   @Output() onSubmit = new EventEmitter();
+  @Output() onFillSuggestion = new EventEmitter();
+  @Output() onClearQuestion = new EventEmitter();
+
+  public fillSuggestion(suggestion: string) {
+    this.onFillSuggestion.emit(suggestion);
+  }
 
 }

@@ -7,11 +7,12 @@ import { FormBuilder, FormGroup, NonNullableFormBuilder, Validators } from '@ang
 import { ApiService } from '../../services/api.service';
 import { tap } from 'rxjs';
 import { ChatFormProps } from '../../models/chat.model';
+import { ChatHeaderComponent } from '../../components/chat-header/chat-header.component';
 
 @Component({
   selector: 'app-chat',
   standalone: true,
-  imports: [CommonModule, ChatFormComponent],
+  imports: [CommonModule, ChatFormComponent, ChatHeaderComponent],
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss']
 })
@@ -30,9 +31,9 @@ export class ChatComponent implements OnInit {
 
   private buildForm(): void {
     this.chatForm = this._formBuilder.group({
-      pergunta: ['', [Validators.required]],
+      pergunta: ['', [Validators.required, Validators.minLength(5)]],
       content: [''],
-    }) as FormGroup<ChatFormProps>;
+    })
   }
 
   public getQuestion$ = computed(() => this.chatForm.get('pergunta')?.value)
@@ -53,12 +54,20 @@ export class ChatComponent implements OnInit {
         (response) => {
           console.log(response);
           this.chatForm.controls.content.setValue(response.resposta.content);
-          this.chatForm.controls.pergunta.setValue('');
+          this.clearQuestionField()
         },
         (error) => {
           console.log(error);
         }
       );
+  }
+
+  public fillSuggestion(suggestion: string) {
+    this.chatForm.controls.pergunta.setValue(suggestion);
+  }
+
+  public clearQuestionField() {
+    this.chatForm.controls.pergunta.setValue('');
   }
 
 

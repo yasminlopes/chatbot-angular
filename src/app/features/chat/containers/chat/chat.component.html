@@ -1,8 +1,10 @@
-<p>chat works!</p>
+<app-chat-header></app-chat-header>
 <app-chat-form
   [form]="chatForm"
   [response]="chatForm.controls.content.value"
   [loading]="loading()"
   (onSubmit)="sendMessage()"
+  (onFillSuggestion)="fillSuggestion($event)"
+  (onClearQuestion)="clearQuestionField()"
 >
 </app-chat-form>

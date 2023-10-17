@@ -5,18 +5,34 @@
       placeholder="Digite sua pergunta"
       formControlName="pergunta"
     ></app-input>
-    <app-button
-      [icon]="'auto_awesome'"
-      [text]="'Enviar pergunta'"
-      (onClick)="onSubmit.emit()"
-    ></app-button>
+
+    <div class="form-buttons">
+      <app-button
+        [icon]="'auto_awesome'"
+        [text]="'Enviar pergunta'"
+        [disabled]="form.invalid"
+        (onClick)="onSubmit.emit()"
+      ></app-button>
+
+      <app-button
+        *ngIf="form.get('pergunta')?.value"
+        [icon]="'clear'"
+        [text]="'Limpar campo'"
+        [textVisible]="false"
+        (onClick)="onClearQuestion.emit()"
+      ></app-button>
+    </div>
   </div>
- 
-  <div class="text-area" *ngIf="!loading; else typingTemplate">
+
+  <div class="text-area" *ngIf="!loading && response; else typingTemplate">
     {{ response }}
   </div>
 </form>
 
 <ng-template #typingTemplate>
-  <app-typing-loader [loading]="loading"/>
+  <app-typing-loader [loading]="loading" />
 </ng-template>
+
+<ng-container *ngIf="!response && !loading">
+  <app-chat-suggestions (onFillSuggestion)="fillSuggestion($event)" />
+</ng-container>

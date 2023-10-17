@@ -2,7 +2,7 @@
   position: relative;
 
   &__label {
-    color: white;
+    color: #606a8c;
     font-weight: 500;
   }
 
@@ -33,11 +33,11 @@
     padding: 10px 20px;
     font-size: 1rem;
     font-weight: 400;
-    color: white;
+    color: #cbd5f5;
     background-color: transparent;
 
     &::placeholder {
-      color: white;
+      color: #606a8c;
     }
 
     &:focus {
