@@ -51,10 +51,10 @@ export class ChatComponent implements OnInit {
         })
       )
       .subscribe(
-        (response) => {
-          console.log(response);
-          this.chatForm.controls.content.setValue(response.resposta.content);
-          this.clearQuestionField()
+        (response: BardAiResponse) => {
+          const md = new MarkdownIt();
+          const markdownContent = md.render(response.resposta.content.toString())
+          this.chatForm.controls.content.setValue(markdownContent);
         },
         (error) => {
           console.log(error);

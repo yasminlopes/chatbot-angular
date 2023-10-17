@@ -26,9 +26,11 @@
     </div>
   </div>
 
-  <div class="text-area" *ngIf="!loading && response; else typingTemplate">
-    {{ response }}
-  </div>
+  <div
+    class="text-area"
+    *ngIf="!loading && response; else typingTemplate"
+    [innerHTML]="response"
+  ></div>
 </form>
 
 <ng-template #typingTemplate>
