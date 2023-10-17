@@ -1,0 +1,22 @@
+<form [formGroup]="form">
+  <div class="form-container">
+    <app-input
+      iconLeft="contact_support"
+      placeholder="Digite sua pergunta"
+      formControlName="pergunta"
+    ></app-input>
+    <app-button
+      [icon]="'auto_awesome'"
+      [text]="'Enviar pergunta'"
+      (onClick)="onSubmit.emit()"
+    ></app-button>
+  </div>
+ 
+  <div class="text-area" *ngIf="!loading; else typingTemplate">
+    {{ response }}
+  </div>
+</form>
+
+<ng-template #typingTemplate>
+  <app-typing-loader [loading]="loading"/>
+</ng-template>

@@ -1,0 +1,8 @@
+<p>chat works!</p>
+<app-chat-form
+  [form]="chatForm"
+  [response]="chatForm.controls.content.value"
+  [loading]="loading()"
+  (onSubmit)="sendMessage()"
+>
+</app-chat-form>
