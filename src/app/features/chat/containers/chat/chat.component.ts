@@ -68,7 +68,7 @@ export class ChatComponent implements OnInit {
           return of(markdownContent);
         }),
         catchError(() => {
-          return of('Erro, tente novamente.');
+          return of('Oops... Estamos enfrentando um probleminha para conectar com o servidor. Por favor, tente novamente mais tarde.');
         }),
         finalize(() => {
           this.loading.set(false);
