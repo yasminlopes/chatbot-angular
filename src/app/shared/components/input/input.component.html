@@ -1,0 +1,33 @@
+<div class="input-group">
+  <label for="{{ id }}" class="input-group__label">{{ label }}</label>
+  <span *ngIf="required" class="input-group__required">*</span>
+  <div
+    class="input-group__container input-group__container--{{
+      iconLeft ? 'with-left-icon' : ''
+    }} input-group__container--{{ iconRight ? 'with-right-icon' : '' }}"
+  >
+    <input
+      [ngModel]="value"
+      (ngModelChange)="onChange($event)"
+      [type]="type"
+      [id]="id"
+      [placeholder]="placeholder"
+      [disabled]="disabled"
+      [name]="formControlName"
+      [ngClass]="{ 'input-group__disabled not-allowed': disabled }"
+      class="input-group__input"
+    />
+    <span
+      [ngClass]="{ icon: true, 'icon-left': iconLeft }"
+      class="material-icons input-group__icon input-group__icon--left"
+    >
+      {{ iconLeft }}
+    </span>
+    <span
+      [ngClass]="{ icon: true, 'icon-right': iconRight }"
+      class="material-icons input-group__icon input-group__icon--right"
+    >
+      {{ iconRight }}
+    </span>
+  </div>
+</div>
