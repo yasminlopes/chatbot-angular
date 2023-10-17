@@ -13,6 +13,7 @@ button {
   cursor: pointer;
   transition: all 0.3s ease-in-out;
   outline: none;
+  white-space: wrap;
 
   .material-icons {
     background-color: transparent;
@@ -44,4 +45,14 @@ button {
     box-shadow: 0 0 0 3px rgba(46, 242, 131, 0.4);
   }
 
+  // Media queries for responsive design
+  @media only screen and (max-width: 768px) {
+    font-size: 1rem;
+    padding: 8px 16px;
+  }
+
+  @media only screen and (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
 }

@@ -1,12 +1,14 @@
 <form [formGroup]="form">
   <div class="form-container">
-    <app-input
-      iconLeft="contact_support"
-      placeholder="Digite sua pergunta"
-      formControlName="pergunta"
-    ></app-input>
-
-    <div class="form-buttons">
+    <div class="input-container">
+      <app-input
+        iconLeft="contact_support"
+        placeholder="Digite sua pergunta"
+        formControlName="pergunta"
+      ></app-input>
+    </div>
+    <br>
+    <div class="button-container">
       <app-button
         [icon]="'auto_awesome'"
         [text]="'Enviar pergunta'"
