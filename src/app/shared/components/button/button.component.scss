@@ -1,0 +1,46 @@
+button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  background: transparent;
+  border: 2px solid #21A668;
+  color: #2ef283;
+  font-size: 1.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none;
+
+  .material-icons {
+    background-color: transparent;
+    color: #2ef283;
+    transition: all 0.3s ease-in-out;
+  }
+
+  &:hover {
+    background-color: #2ef283;
+    color: #080f26;
+
+    .material-icons {
+      color: #080f26;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+    background-color: #2ef283;
+    color: #080f26;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(46, 242, 131, 0.4);
+  }
+}
