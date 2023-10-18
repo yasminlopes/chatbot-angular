@@ -20,6 +20,8 @@ import { BardAiResponse, ChatFormProps } from '../../models/chat.model';
 import { ApiService } from '../../services/api.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import * as MarkdownIt from 'markdown-it';
+import { CHAT_SUGGESTIONS } from '../../models/chat-suggestions.model';
+
 @Component({
   selector: 'app-chat',
   standalone: true,
@@ -29,6 +31,7 @@ import * as MarkdownIt from 'markdown-it';
 })
 export class ChatComponent implements OnInit {
   public chatForm: FormGroup<ChatFormProps>;
+  public suggestions = CHAT_SUGGESTIONS;
 
   private _formBuilder = inject(NonNullableFormBuilder);
   private _apiService = inject(ApiService);

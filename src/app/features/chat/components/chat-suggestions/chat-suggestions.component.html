@@ -1,28 +1,11 @@
 <h2>Não sabe por onde começar?</h2>
 <h3>Aqui está algumas sugestões</h3>
-<app-button
-    [icon]="'auto_awesome'"
-    [text]="'Crie uma lista de itens básicos para levar na mala para uma viagem de 3 dias'"
-    (onClick)="fillSuggestion('Crie uma lista de itens básicos para levar na mala para uma viagem de 3 dias')"
-></app-button>
-<br>
 
-<app-button
+<ng-container *ngFor="let suggestion of suggestions">
+  <app-button
     [icon]="'auto_awesome'"
-    [text]="'Como formatar uma citação no formato ABNT?'"
-    (onClick)="fillSuggestion('Como formatar uma citação no formato ABNT?')"
-></app-button>
-<br>
-
-<app-button
-    [icon]="'auto_awesome'"
-    [text]="'Dicas de como melhorar o inglês'"
-    (onClick)="fillSuggestion('Dicas de como melhorar o inglês')"
-></app-button>
-<br>
-
-<app-button
-    [icon]="'auto_awesome'"
-    [text]="'Quais são as melhores práticas para manter uma alimentação saudável?'"
-    (onClick)="fillSuggestion('Quais são as melhores práticas para manter uma alimentação saudável?')"
-></app-button>
+    [text]="suggestion"
+    (onClick)="fillSuggestion(suggestion)"
+  ></app-button>
+  <br />
+</ng-container>

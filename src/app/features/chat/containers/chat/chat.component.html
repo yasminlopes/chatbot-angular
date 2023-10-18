@@ -3,6 +3,7 @@
   [form]="chatForm"
   [response]="chatForm.controls.answer.value"
   [loading]="loading()"
+  [arraySuggestions]="suggestions"
   (onSubmit)="sendMessage()"
   (onFillSuggestion)="fillSuggestion($event)"
   (onClearQuestion)="clearQuestionField()"

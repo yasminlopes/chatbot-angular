@@ -37,5 +37,7 @@
 </ng-template>
 
 <ng-container *ngIf="!response && !loading">
-  <app-chat-suggestions (onFillSuggestion)="fillSuggestion($event)" />
+  <app-chat-suggestions 
+  [suggestions]="arraySuggestions"
+  (onFillSuggestion)="fillSuggestion($event)" />
 </ng-container>

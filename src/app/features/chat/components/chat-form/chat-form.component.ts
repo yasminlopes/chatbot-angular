@@ -26,6 +26,7 @@ export class ChatFormComponent {
   @Input({ required: true }) public form: FormGroup;
   @Input({ required: true }) public response: any;
   @Input({ required: true }) public loading: boolean;
+  @Input({ required: true }) public arraySuggestions: string[];
 
   @Output() onSubmit = new EventEmitter();
   @Output() onFillSuggestion = new EventEmitter();

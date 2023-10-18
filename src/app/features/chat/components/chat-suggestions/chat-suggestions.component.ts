@@ -11,6 +11,7 @@ import { ButtonComponent } from 'src/app/shared/components/button/button.compone
 })
 export class ChatSuggestionsComponent {
 
+  @Input({ required: true }) public suggestions: string[];
   @Output() onFillSuggestion = new EventEmitter();
 
   public fillSuggestion(suggestion: string) {
