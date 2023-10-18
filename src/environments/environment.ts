@@ -1,3 +1,3 @@
 export const environment = {
-  BARD_API_URL: 'https://api.producao/bard-api',
+  BARD_API_URL: 'http://api.producao/bard-api',
 };
