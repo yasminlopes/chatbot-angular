@@ -42,14 +42,14 @@ export class ChatComponent implements OnInit {
     this.buildForm();
   }
 
-  public get pergunta() {
-    return this.chatForm.controls.pergunta.value;
+  public get question() {
+    return this.chatForm.controls.question.value;
   }
 
   private buildForm(): void {
     this.chatForm = this._formBuilder.group({
-      pergunta: ['', [Validators.required, Validators.minLength(5)]],
-      content: [''],
+      question: ['', [Validators.required, Validators.minLength(5)]],
+      answer: [''],
     });
   }
 
@@ -57,13 +57,13 @@ export class ChatComponent implements OnInit {
     this.loading.set(true);
 
     this._apiService
-      .getBardAiResponse(this.pergunta)
+      .getBardAiResponse(this.question)
       .pipe(
         takeUntilDestroyed(this._destroyRef),
         switchMap((response: BardAiResponse) => {
           const md = new MarkdownIt();
           const markdownContent = md.render(
-            response.resposta.content.toString()
+            response.bard.answer.toString()
           );
           return of(markdownContent);
         }),
@@ -76,8 +76,8 @@ export class ChatComponent implements OnInit {
       )
       .subscribe(
         (markdownContent: string) => {
-          this.chatForm.controls.content.setValue(markdownContent);
-          this.chatForm.controls.pergunta.setValue('');
+          this.chatForm.controls.answer.setValue(markdownContent);
+          this.chatForm.controls.question.setValue('');
         },
         (error) => {
           console.log(error);
@@ -86,10 +86,10 @@ export class ChatComponent implements OnInit {
   }
 
   public fillSuggestion(suggestion: string) {
-    this.chatForm.controls.pergunta.setValue(suggestion);
+    this.chatForm.controls.question.setValue(suggestion);
   }
 
   public clearQuestionField() {
-    this.chatForm.controls.pergunta.reset('');
+    this.chatForm.controls.question.reset('');
   }
 }

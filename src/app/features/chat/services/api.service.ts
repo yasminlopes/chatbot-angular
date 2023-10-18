@@ -12,7 +12,7 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  public getBardAiResponse(pergunta: any): Observable<BardAiResponse> {
-    return this.http.post<BardAiResponse>(`${this.baseUrl}`, { pergunta });
+  public getBardAiResponse(question: any): Observable<BardAiResponse> {
+    return this.http.post<BardAiResponse>(`${this.baseUrl}`, { question });
   }
 }

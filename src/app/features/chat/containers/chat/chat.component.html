@@ -1,7 +1,7 @@
 <app-chat-header></app-chat-header>
 <app-chat-form
   [form]="chatForm"
-  [response]="chatForm.controls.content.value"
+  [response]="chatForm.controls.answer.value"
   [loading]="loading()"
   (onSubmit)="sendMessage()"
   (onFillSuggestion)="fillSuggestion($event)"

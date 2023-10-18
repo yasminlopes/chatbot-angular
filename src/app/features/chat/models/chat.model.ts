@@ -1,20 +1,20 @@
 import { FormControl } from '@angular/forms';
 
 export interface BardAiResponse {
-  resposta: BardAi;
+  bard: BardAi;
 }
 
 export interface BardAiRequest {
-  pergunta: string;
+  question: string;
 }
 
 export interface BardAi {
-  pergunta: string;
-  content: string;
+  question: string;
+  answer: string;
   conversation_id: string;
 }
 
 export interface ChatFormProps {
-  pergunta: FormControl<string>;
-  content: FormControl<string>;
+  question: FormControl<string>;
+  answer: FormControl<string>;
 }
