@@ -33,6 +33,7 @@ export class ChatFormComponent {
 
   public fillSuggestion(suggestion: string) {
     this.onFillSuggestion.emit(suggestion);
+    this.onSubmit.emit();
   }
 
 }
